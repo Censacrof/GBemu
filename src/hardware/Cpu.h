@@ -9,19 +9,19 @@ class Cpu
         Mmu *_mmu;
 
         // Buffer containing the state of all registers
-        uint8_t _state[96];
+        uint8_t _state[12];
 
         // Registers offsets in the _state buffer
         enum {
             // 8 bit regs (AF, BC, DE, HL, are sometimes used as 16 bit regs)
-            R_A =  8, R_F =  0,
-            R_B = 24, R_C = 16,            
-            R_D = 40, R_E = 32,
-            R_H = 56, R_L = 48,
+            R_A = 1, R_F = 0,
+            R_B = 3, R_C = 2,        
+            R_D = 5, R_E = 4,
+            R_H = 7, R_L = 6,
 
             // 16 bit regs
-            R_SP = 64,
-            R_PC = 80,       
+            R_SP = 8,
+            R_PC = 10,
         };
 
         // Flag bit masks (the lower nibble in F is never used)
@@ -45,10 +45,44 @@ class Cpu
                         // instruction
         };
 
+        // filled during the fetch phase
+        uint16_t _opcode;
+
+        bool _isHalted;
+
+
+        // returns true if the condition enconded in the _opcode is met
+        bool _checkCondition();        
+
+        // reads a byte and increments the PC by 1
+        inline uint8_t _readb_PC();
+
+        // reads a word and increments the PC by 2
+        inline uint16_t _readw_PC();
+
+        // push a byte onto the stack
+        inline void _pushb(uint8_t b);
+
+        // push a word onto the stack
+        inline void _pushw(uint16_t w);
+
+        // pop a byte from the stack
+        inline uint8_t _popb();
+
+        // pop a word from the stack
+        inline uint16_t _popw();
+
     public:
         Cpu(Mmu *mmu);
 
         void reset();
+
+        void fetch();
+        void execute();
+
+        void dump();
+
+        bool cycle();
 };
 
 #endif
