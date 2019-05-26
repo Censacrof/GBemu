@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include "Mmu.h"
+#include <string>
 
 class Cpu
 {
@@ -47,6 +48,25 @@ class Cpu
 
         // filled during the fetch phase
         uint16_t _opcode;
+        uint16_t *_destination;
+        uint16_t *_source;
+        std::string _mnemonic;
+
+        uint16_t _destinationType;
+        uint16_t _sourceType;
+        enum {
+            OPT_IMPLICIT,
+            OPT_IMM8,
+            OPT_IMM16,
+            OPT_DIR8,
+            OPT_DIR16,
+            OPT_IND8,
+            OPT_IND16,
+            OPT_INDADDR8,
+            OPT_INDADDR16,
+            OPT_FLAG,
+            OPT_NFLAG,
+        };
 
         bool _isHalted;
 
@@ -76,6 +96,7 @@ class Cpu
         Cpu(Mmu *mmu);
 
         void reset();
+        void init();
 
         void fetch();
         void execute();

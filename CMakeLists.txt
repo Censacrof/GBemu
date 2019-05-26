@@ -7,6 +7,7 @@ set(SOURCE_FILES_LIBGB
     ${SRC_FOLDER}/hardware/System.cpp
     ${SRC_FOLDER}/hardware/Mmu.cpp
     ${SRC_FOLDER}/hardware/Cpu.cpp
+    ${SRC_FOLDER}/hardware/Cpu_fetch.cpp
 )
 add_library(gb ${SOURCE_FILES_LIBGB})
 

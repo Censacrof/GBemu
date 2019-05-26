@@ -23,8 +23,7 @@ void System::bootstrap()
 
     // // ( DBG
     // _mmu->_memory[0] = 0xcb;
-    // _mmu->_memory[0] = 0xcb;
-    // _mmu->_memory[0] = 0xcb;
+    // _mmu->_memory[1] = 0x06;
     // // )
 
     // // ( DBG: dump the content of the system rom
